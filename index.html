@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitation Mariage – Maram & Koussay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C9A84C;
+      --gold-lt: #E8D5A3;
+      --gold-dk: #8A6020;
+      --ivory: #FAF7F0;
+      --brown: #3A2610;
+      --cream: #EDE8DF;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Amiri', serif;
+      background: #1a1208;
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* ----- COVER ----- */
+    #screen-cover {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    #cover-floral {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    #cover-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,6,2,0.22) 0%,
+        rgba(10,6,2,0.08) 40%,
+        rgba(10,6,2,0.42) 100%
+      );
+    }
+    .petal {
+      position: absolute;
+      z-index: 2;
+      width: 6px; height: 6px;
+      background: var(--gold-lt);
+      border-radius: 50% 0 50% 0;
+      opacity: 0;
+      animation: floatPetal linear infinite;
+    }
+    @keyframes floatPetal {
+      0%   { opacity:0; transform:translateY(110vh) rotate(0deg); }
+      10%  { opacity:.7; }
+      90%  { opacity:.4; }
+      100% { opacity:0; transform:translateY(-10vh) rotate(360deg); }
+    }
+    .cover-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .tap-ring {
+      width: 66px; height: 66px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(232,213,163,0.9);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: ringPulse 2.2s ease-in-out infinite;
+      cursor: pointer;
+      background: rgba(201,168,76,0.12);
+    }
+    .tap-ring::after {
+      content: '';
+      position: absolute; width: 100%; height: 100%;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-lt);
+      animation: ripple 2.2s ease-in-out infinite;
+    }
+    @keyframes ringPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+    @keyframes ripple { 0%{transform:scale(1);opacity:.8} 100%{transform:scale(1.75);opacity:0} }
+    .tap-icon { color: var(--gold-lt); font-size: 1.6rem; }
+    .tap-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: .88rem;
+      letter-spacing: .2em;
+      color: rgba(232,213,163,.92);
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes slideUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ----- VIDEO INTRO ----- */
+    #screen-video {
+      display: none;
+      position: relative;
+      min-height: 100vh;
+      background: #000;
+    }
+    #screen-video video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute; inset: 0;
+    }
+    #skip-btn {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%); z-index: 10;
+      background: rgba(201,168,76,.18);
+      border: 1px solid var(--gold);
+      color: var(--gold-lt);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: .95rem;
+      letter-spacing: .2em; padding: .6rem 2rem;
+      border-radius: 2px; cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: background .3s;
+    }
+    #skip-btn:hover { background: rgba(201,168,76,.32); }
+
+    /* ----- MAIN INVITATION ----- */
+    #main-invitation { display: none; }
+
+    .inv-section {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden; padding: 3rem 1.4rem;
+    }
+
+    /* BG FLORAL */
+    .bg-floral { background: #241808; }
+    .bg-floral .anim-bg { position: absolute; inset: 0; z-index: 0; }
+    .bg-floral .anim-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.48;
+      filter: sepia(0.12) saturate(1.15) brightness(0.82);
+      animation: floralBreath 8s ease-in-out infinite alternate;
+    }
+    @keyframes floralBreath { 0%{transform:scale(1);opacity:0.42} 100%{transform:scale(1.05);opacity:0.52} }
+    .bg-floral .anim-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        rgba(20,12,4,0.52) 0%,
+        rgba(20,12,4,0.14) 40%,
+        rgba(20,12,4,0.32) 70%,
+        rgba(20,12,4,0.62) 100%);
+    }
+
+    /* BG STARRY */
+    .bg-starry-night { background: #1a1208; }
+    .bg-starry-night .star-layer { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .bg-starry-night .star-layer .star {
+      position: absolute; border-radius: 50%;
+      animation: twinkle ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from{opacity:.18;transform:scale(0.6)} to{opacity:1;transform:scale(1.4)} }
+    .bg-starry-night .nebula {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 65% 55% at 20% 30%, rgba(201,168,76,0.11) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 65% at 80% 70%, rgba(180,140,60,0.09) 0%, transparent 55%);
+      animation: nebulaMove 10s ease-in-out infinite alternate;
+    }
+    @keyframes nebulaMove { 0%{transform:translateX(-5%) scale(1)} 100%{transform:translateX(5%) scale(1.05)} }
+
+    /* BG DEEP */
+    .bg-deep {
+      background: linear-gradient(160deg, #1e1608 0%, #281c0a 30%, #181008 60%, #100a04 100%);
+    }
+    .bg-deep .deep-glow {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 85% 75% at 50% 35%, rgba(201,168,76,0.1) 0%, transparent 65%);
+      animation: glowPulse 5s ease-in-out infinite alternate;
+    }
+    @keyframes glowPulse { 0%{opacity:0.45;transform:scale(0.92)} 100%{opacity:1;transform:scale(1.08)} }
+
+    /* BG WARM FLORAL */
+    .bg-warm-floral { background: #221508; }
+    .bg-warm-floral .anim-bg { position: absolute; inset: 0; z-index: 0; }
+    .bg-warm-floral .anim-bg img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.44;
+      filter: sepia(0.2) saturate(1.4) brightness(0.72) hue-rotate(-8deg);
+      animation: warmBreath 7s ease-in-out infinite alternate;
+    }
+    @keyframes warmBreath { 0%{transform:scale(1);opacity:0.38} 100%{transform:scale(1.06);opacity:0.48} }
+    .bg-warm-floral .anim-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        rgba(22,14,4,0.58) 0%,
+        rgba(22,14,4,0.18) 40%,
+        rgba(22,14,4,0.35) 70%,
+        rgba(22,14,4,0.65) 100%);
+    }
+    .bg-warm-floral .warm-float {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 30% 40%, rgba(201,168,76,0.09) 0%, transparent 60%);
+      animation: warmFloat 6s ease-in-out infinite alternate;
+    }
+    @keyframes warmFloat { 0%{transform:translateY(-5%) scale(0.95);opacity:0.5} 100%{transform:translateY(5%) scale(1.05);opacity:1} }
+
+    /* Transition reveal sections */
+    .inv-section .sec-content {
+      opacity: 0;
+      transform: translateY(36px) scale(0.97);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .inv-section.visible .sec-content { opacity: 1; transform: translateY(0) scale(1); }
+
+    .section-transition {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      z-index: 2; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, rgba(10,6,2,0.45));
+    }
+
+    /* ----- CONTENT ----- */
+    .sec-content {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 480px;
+      margin: 0 auto;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 1.4rem;
+      text-align: center;
+    }
+
+    .basmala {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.4rem,5vw,1.85rem);
+      color: var(--gold-lt);
+      line-height: 1.7;
+      text-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+
+    .divider {
+      display: flex; align-items: center; gap: .6rem;
+      width: 100%; color: var(--gold);
+    }
+    .divider::before,.divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg,transparent,currentColor,transparent);
+    }
+    .divider span { font-size: 1rem; flex-shrink: 0; }
+    .divider.light { color: var(--gold-lt); }
+
+    .quran-card {
+      background: rgba(250,247,240,.11);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,168,76,.32);
+      border-radius: 6px; padding: 2rem 1.6rem;
+      width: 100%; position: relative;
+      transition: background .5s ease, border-color .5s ease;
+    }
+    .quran-card:hover { background: rgba(250,247,240,.16); border-color: rgba(201,168,76,.5); }
+    .quran-card::before {
+      content: '﴿'; position: absolute; top: -.5rem; right: 1.2rem;
+      font-size: 2.4rem; color: var(--gold-lt); line-height: 1; opacity: 0.55;
+    }
+    .quran-verse {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.1rem,4vw,1.3rem);
+      line-height: 2.1; color: var(--ivory); display: block;
+    }
+    .surah-ref {
+      display: block; margin-top: .8rem;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: .9rem; color: var(--gold-lt); letter-spacing: .08em; opacity: 0.78;
+    }
+
+    /* CARTE D'INVITATION ARABE */
+    .invitation-arabe-card {
+      background: rgba(250,247,240,.08);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,168,76,.35);
+      border-radius: 6px; padding: 2.2rem 1.8rem;
+      width: 100%; position: relative;
+      text-align: center;
+      transition: background .5s ease, border-color .5s ease;
+    }
+    .invitation-arabe-card:hover {
+      background: rgba(250,247,240,.14);
+      border-color: rgba(201,168,76,.55);
+    }
+    .invitation-arabe-card .arabic-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.3rem,5vw,1.7rem);
+      line-height: 2.2;
+      color: var(--ivory);
+      display: block;
+      text-align: center;
+    }
+    .invitation-arabe-card .arabic-text .highlight {
+      color: var(--gold-lt);
+      font-weight: 700;
+    }
+    .invitation-arabe-card .arabic-sub {
+      display: block;
+      margin-top: 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: .9rem;
+      color: var(--gold-lt);
+      letter-spacing: .1em;
+      opacity: 0.8;
+    }
+    .invitation-arabe-card::before {
+      content: '﴿'; position: absolute; top: -.5rem; right: 1.2rem;
+      font-size: 2.4rem; color: var(--gold-lt); line-height: 1; opacity: 0.4;
+    }
+    .invitation-arabe-card::after {
+      content: '﴾'; position: absolute; bottom: -.5rem; left: 1.2rem;
+      font-size: 2.4rem; color: var(--gold-lt); line-height: 1; opacity: 0.4;
+    }
+
+    .video-box {
+      width: 100%; border-radius: 6px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,.38);
+      box-shadow: 0 8px 40px rgba(0,0,0,.4);
+      background: #0a0603; aspect-ratio: 9/16; max-height: 420px;
+      position: relative;
+      transition: transform .5s ease, box-shadow .5s ease;
+    }
+    .video-box:hover { transform: scale(1.01); box-shadow: 0 12px 50px rgba(0,0,0,.5); }
+    .video-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-tag {
+      position: absolute; bottom: .8rem; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.5); border: 1px solid var(--gold);
+      color: var(--gold-lt); font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: .8rem; letter-spacing: .18em;
+      padding: .3rem 1.1rem; border-radius: 2px; backdrop-filter: blur(4px);
+      white-space: nowrap;
+    }
+
+    .dresscode-img {
+      width: 100%; max-width: 320px; border-radius: 6px;
+      border: 1.5px solid var(--gold-lt);
+      box-shadow: 0 8px 30px rgba(0,0,0,.3);
+      display: block; margin: 0 auto;
+      transition: transform .5s ease, box-shadow .5s ease;
+    }
+    .dresscode-img:hover { transform: scale(1.03) rotate(1deg); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+
+    /* SCRATCH */
+    .scratch-wrap {
+      position: relative; width: 100%; border-radius: 6px;
+      overflow: hidden; cursor: crosshair;
+      user-select: none; touch-action: none;
+    }
+    .scratch-revealed {
+      background: rgba(250,247,240,.11);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 6px; padding: 1.8rem 1.4rem;
+      text-align: center;
+    }
+    .scratch-revealed .ev-icon { font-size: 1.6rem; color: var(--gold); animation: iconPulse 2s ease-in-out infinite; }
+    @keyframes iconPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+    .scratch-revealed .ev-title {
+      font-family: 'Amiri', serif; font-size: 1.5rem;
+      color: var(--ivory); font-weight: 700; display: block; margin: .3rem 0;
+    }
+    .scratch-revealed .ev-detail {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1rem; color: var(--gold-lt); letter-spacing: .08em; opacity: 0.88;
+    }
+    canvas.scratch-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      border-radius: 6px; touch-action: none;
+    }
+    .scratch-hint {
+      position: absolute; inset: 0; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+      pointer-events: none; gap: .5rem; z-index: 2;
+      animation: hintPulse 3s ease-in-out infinite;
+    }
+    @keyframes hintPulse { 0%,100%{opacity:.78} 50%{opacity:1} }
+    .scratch-hint span {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      color: var(--ivory); font-size: .95rem; letter-spacing: .15em;
+      text-shadow: 0 1px 6px rgba(0,0,0,.5);
+    }
+    .scratch-hint .eraser-emoji { font-size: 2rem; animation: emojiWiggle 2s ease-in-out infinite; }
+    @keyframes emojiWiggle { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+
+    /* PROGRAMME - DATES */
+    .dates-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .date-card {
+      background: rgba(250,247,240,.1);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 6px;
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+      transition: transform .4s ease, background .4s ease, border-color .4s ease;
+    }
+    .date-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      background: rgba(250,247,240,.16);
+      border-color: rgba(201,168,76,.5);
+    }
+    .date-card .date-icon { font-size: 1.8rem; display: block; margin-bottom: .3rem; }
+    .date-card .date-label {
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ivory);
+      display: block;
+    }
+    .date-card .date-detail {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: .95rem;
+      color: var(--gold-lt);
+      letter-spacing: .08em;
+      display: block;
+      margin-top: .2rem;
+      opacity: 0.85;
+    }
+    .date-card .date-arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1rem;
+      color: var(--gold-lt);
+      display: block;
+      margin-top: .1rem;
+      opacity: 0.75;
+    }
+
+    .event-cards-container {
+      max-height: 0; opacity: 0; overflow: hidden; width: 100%;
+      transition: max-height .8s cubic-bezier(.4,0,.2,1), opacity .6s ease, margin .4s ease;
+      margin: 0;
+    }
+    .event-cards-container.open { max-height: 800px; opacity: 1; margin: .5rem 0; }
+
+    /* LOCALISATION */
+    .loc-card {
+      width: 100%;
+      background: rgba(250,247,240,.11);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(201,168,76,.32);
+      border-radius: 8px; overflow: hidden;
+      transition: transform .5s ease, box-shadow .5s ease;
+    }
+    .loc-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+    .loc-card .map-container { width: 100%; height: 200px; overflow: hidden; position: relative; }
+    .loc-card .map-container iframe {
+      width: 100%; height: 100%; border: none;
+      filter: sepia(0.22) saturate(1.3) brightness(0.74);
+      transition: filter .5s ease;
+    }
+    .loc-card:hover .map-container iframe { filter: sepia(0.08) saturate(1.5) brightness(0.9); }
+    .loc-info { padding: 1.4rem; text-align: center; }
+    .loc-name { font-family: 'Amiri', serif; font-size: 1.4rem; font-weight: 700; color: var(--ivory); display: block; margin-bottom: .4rem; }
+    .loc-addr {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: .95rem; color: var(--gold-lt); letter-spacing: .06em;
+      display: block; margin-bottom: 1rem; opacity: 0.82;
+    }
+    .map-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: linear-gradient(135deg, var(--gold-dk), var(--gold));
+      color: var(--ivory); font-family: 'Cormorant Garamond', serif;
+      font-size: .95rem; letter-spacing: .15em;
+      padding: .7rem 1.8rem; border-radius: 3px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(154,112,48,.28);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .map-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(154,112,48,.45); }
+
+    /* CLÔTURE */
+    .closing-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.3rem,5vw,1.7rem);
+      color: var(--ivory); line-height: 1.8;
+      text-align: center; text-shadow: 0 2px 12px rgba(0,0,0,.28);
+    }
+    .closing-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1rem; color: var(--gold-lt); letter-spacing: .18em; opacity: 0.82;
+    }
+    .heart-beat {
+      font-size: 2rem; animation: heartbeat 1.8s ease-in-out infinite;
+      color: var(--gold); display: block;
+    }
+    @keyframes heartbeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+
+    /* FINALE - texte de clôture arabe */
+    .closing-arabic {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.5rem,6vw,2.2rem);
+      color: var(--gold-lt);
+      line-height: 2;
+      text-align: center;
+      text-shadow: 0 2px 16px rgba(0,0,0,.3);
+    }
+    .closing-arabic-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--gold-lt);
+      letter-spacing: .2em;
+      opacity: 0.7;
+    }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .75s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.22s} .d3{transition-delay:.34s}
+    .d4{transition-delay:.46s} .d5{transition-delay:.58s}
+
+    .screen-fade {
+      position: fixed; inset: 0; z-index: 999;
+      background: #0a0603; pointer-events: none;
+      opacity: 0; transition: opacity .45s ease;
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .reveal { opacity:1; transform:none; }
+      * { animation-duration:.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="screen-fade" id="fade"></div>
+
+  <!-- COVER -->
+  <div id="screen-cover" onclick="openVideo()">
+    <img id="cover-floral" src="image1.png" alt="" />
+    <div id="cover-overlay"></div>
+    <div id="petals-container"></div>
+    <div class="cover-content">
+      <div class="tap-ring">
+        <span class="tap-icon">✦</span>
+      </div>
+      <span class="tap-label">Appuyez pour ouvrir</span>
+    </div>
+  </div>
+
+  <!-- VIDEO INTRO -->
+  <div id="screen-video">
+    <video id="intro-video" src="video1.mp4" playsinline muted preload="auto"></video>
+    <button id="skip-btn" onclick="openInvitation()">Passer &nbsp;›</button>
+  </div>
+
+  <!-- MAIN INVITATION -->
+  <div id="main-invitation">
+
+    <!-- S2 : Verset -->
+    <div class="inv-section bg-floral" data-section="2">
+      <div class="anim-bg"><img src="image3.png" alt="" /></div>
+      <div class="section-transition"></div>
+      <div class="sec-content">
+        <div class="divider light reveal"><span>✦</span></div>
+        <div class="basmala reveal">بسم الله الرحمن الرحيم</div>
+        <div class="quran-card reveal d2">
+          <span class="quran-verse">
+            وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا
+            وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ
+            إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+          </span>
+          <span class="surah-ref">— Sourate Ar-Rum : verset 21 —</span>
+        </div>
+        <div class="divider light reveal d3"><span>✦</span></div>
+      </div>
+    </div>
+
+    <!-- S3 : Carte d'invitation arabe (NOUVEAU) -->
+    <div class="inv-section bg-starry-night" data-section="3">
+      <div class="star-layer" id="star-layer-1"></div>
+      <div class="nebula"></div>
+      <div class="section-transition"></div>
+      <div class="sec-content">
+        <div class="divider light reveal"><span>✦</span></div>
+        <div class="invitation-arabe-card reveal d2">
+          <span class="arabic-text">
+            بعد إهدائكم عاطر التّحية<br />
+            تتشرف عائلتا<br />
+            <span class="highlight">السيد مفتاح الفريقي</span> و <span class="highlight">السيد رضا فرحات</span><br />
+            بدعوتكم لحضور حفل زفاف إبنيهما<br />
+            <span class="highlight">مراد</span> و <span class="highlight">منيار</span><br />
+            وذلك بمشيئة الله
+          </span>
+          <span class="arabic-sub">— Nous avons l'honneur de vous inviter à célébrer l'union de nos enfants —</span>
+        </div>
+        <div class="divider light reveal d3"><span>✦</span></div>
+      </div>
+    </div>
+
+    <!-- S4 : Vidéo souvenir -->
+    <div class="inv-section bg-starry-night" data-section="4">
+      <div class="star-layer" id="star-layer-2"></div>
+      <div class="nebula"></div>
+      <div class="section-transition"></div>
+      <div class="sec-content">
+        <div class="basmala reveal" style="font-size:1.3rem">Nos plus beaux moments</div>
+        <div class="video-box reveal d2">
+          <video src="video2.mp4" autoplay playsinline muted loop></video>
+          <span class="video-tag">✦ &nbsp; Nos moments &nbsp; ✦</span>
+        </div>
+        <div class="divider light reveal d3"><span>✦</span></div>
+      </div>
+    </div>
+
+    <!-- S5 : Scratch (événements) -->
+    <div class="inv-section bg-starry-night" data-section="5">
+      <div class="star-layer" id="star-layer-3"></div>
+      <div class="nebula"></div>
+      <div class="section-transition"></div>
+      <div class="sec-content">
+        <div class="basmala reveal" style="font-size:1.2rem">✦ &nbsp; برنامج الاحتفالات &nbsp; ✦</div>
+        <p class="reveal d1" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-lt);font-size:.9rem;letter-spacing:.15em;opacity:0.82">
+          اكشف عن التفاصيل — Découvrez les dates
+        </p>
+        <div class="scratch-wrap reveal d2" id="scratch1" style="width:100%">
+          <div class="scratch-revealed">
+            <span class="ev-icon">🌙</span>
+            <span class="ev-title">العشاء</span>
+            <span class="ev-detail">الثلاثاء، 18 أوت 2026</span>
+            <span class="ev-detail" style="display:block;margin-top:.3rem">بمنزل العروسة الكائن بالميدة</span>
+          </div>
+          <canvas class="scratch-canvas" id="canvas1"></canvas>
+          <div class="scratch-hint" id="hint1">
+            <span class="eraser-emoji">🧹</span>
+            <span>إمسح هنا</span>
+          </div>
+        </div>
+        <div class="scratch-wrap reveal d3" id="scratch2" style="width:100%">
+          <div class="scratch-revealed">
+            <span class="ev-icon">✨</span>
+            <span class="ev-title">الوطية و عقد القران</span>
+            <span class="ev-detail">الخميس، 20 أوت 2026</span>
+            <span class="ev-detail" style="display:block;margin-top:.3rem">قاعة الأفراح بالميدة</span>
+          </div>
+          <canvas class="scratch-canvas" id="canvas2"></canvas>
+          <div class="scratch-hint" id="hint2">
+            <span class="eraser-emoji">🧹</span>
+            <span>إمسح هنا</span>
+          </div>
+        </div>
+        <div class="divider light reveal d4"><span>✦</span></div>
+      </div>
+    </div>
+
+    <!-- S6 : Dates du programme (remplace l'ancien programme) -->
+  
+
+    <!-- S7 : Localisation -->
+    <div class="inv-section bg-floral" data-section="7">
+      <div class="anim-bg"><img src="image3.png" alt="" /></div>
+      <div class="section-transition"></div>
+      <div class="sec-content">
+        <div class="basmala reveal" style="font-size:1.2rem">📍 &nbsp; Lieu de la cérémonie</div>
+        <div class="divider light reveal d1"><span>✦</span></div>
+        <div class="loc-card reveal d2">
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps?q=36.7366127,10.8644512&output=embed"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          <div class="loc-info">
+            <span class="loc-name">Salle des Fêtes — El Mida</span>
+            <span class="loc-addr">El Mida, Nabeul, Tunisie</span>
+            <a href="https://maps.google.com/?q=36.7366127,10.8644512" target="_blank" class="map-btn">
+              🗺 &nbsp; Ouvrir sur Maps
+            </a>
+          </div>
+        </div>
+        <div class="divider light reveal d3"><span>✦</span></div>
+      </div>
+    </div>
+
+
+
+    <!-- S9 : Clôture -->
+    <div class="inv-section bg-deep" data-section="9">
+      <div class="deep-glow"></div>
+      <div class="sec-content">
+        <div class="divider light reveal"><span>✦</span></div>
+        <p class="closing-text reveal d1">
+          
+          <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,4vw,1.3rem);color:var(--gold-lt);opacity:0.82">
+            Votre présence est notre plus beau cadeau
+          </span>
+        </p>
+        <span class="heart-beat reveal d2">♡</span>
+        <div class="closing-arabic reveal d3">
+          ولكم العاقبة في الأفراح و المسرات
+        </div>
+       
+    </div>
+
+  </div>
+
+  <script>
+    /* PETALS */
+    (function(){
+      const c=document.getElementById('petals-container');
+      c.style.cssText='position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden';
+      for(let i=0;i<18;i++){
+        const p=document.createElement('div');
+        p.className='petal';
+        const size=Math.random()*5+3;
+        p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*8}s;`;
+        c.appendChild(p);
+      }
+    })();
+
+    /* STARS */
+    function createStars(containerId){
+      const c=document.getElementById(containerId);
+      if(!c)return;
+      for(let i=0;i<90;i++){
+        const s=document.createElement('div');
+        s.className='star';
+        const size=Math.random()*2.5+.5;
+        const colors=['#E8D5A3','#C9A84C','#FAF7F0','#fff8e7','#d4c9a8'];
+        s.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${1.5+Math.random()*4}s;animation-delay:${Math.random()*5}s;background:${colors[Math.floor(Math.random()*colors.length)]};`;
+        c.appendChild(s);
+      }
+    }
+    createStars('star-layer-1');
+    createStars('star-layer-2');
+    createStars('star-layer-3');
+
+    /* SECTION OBSERVER */
+    (function(){
+      const obs=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+      },{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+      document.querySelectorAll('.inv-section').forEach(s=>obs.observe(s));
+    })();
+
+    /* SCRATCH */
+    function initScratch(canvasId,hintId,wrapId){
+      const canvas=document.getElementById(canvasId);
+      const hint=document.getElementById(hintId);
+      const wrap=document.getElementById(wrapId);
+      if(!canvas)return;
+      const ctx=canvas.getContext('2d');
+      let W,H,painting=false,revealed=false;
+      function resize(){
+        const r=wrap.getBoundingClientRect();
+        W=canvas.width=r.width;
+        H=canvas.height=r.height||150;
+        draw();
+      }
+      function draw(){
+        const grd=ctx.createLinearGradient(0,0,W,H);
+        grd.addColorStop(0,'#5a3a1a');
+        grd.addColorStop(.35,'#8A6020');
+        grd.addColorStop(.65,'#C9A84C');
+        grd.addColorStop(1,'#6a4a20');
+        ctx.globalCompositeOperation='source-over';
+        ctx.fillStyle=grd;
+        ctx.fillRect(0,0,W,H);
+        ctx.strokeStyle='rgba(255,255,255,.06)';
+        ctx.lineWidth=1;
+        for(let i=0;i<W;i+=10){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
+        for(let i=0;i<H;i+=10){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
+      }
+      function scratch(x,y){
+        ctx.globalCompositeOperation='destination-out';
+        ctx.beginPath();ctx.arc(x,y,22,0,Math.PI*2);ctx.fill();
+        checkReveal();
+      }
+      function checkReveal(){
+        if(revealed)return;
+        const d=ctx.getImageData(0,0,W,H).data;
+        let trans=0;
+        for(let i=3;i<d.length;i+=4)if(d[i]<128)trans++;
+        if(trans/(d.length/4)*100>55){
+          revealed=true;
+          canvas.style.transition='opacity .6s ease';
+          canvas.style.opacity='0';
+          if(hint)hint.style.display='none';
+          setTimeout(()=>{canvas.style.display='none'},650);
+        }
+      }
+      function pos(e){
+        const r=canvas.getBoundingClientRect();
+        if(e.touches)return{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};
+        return{x:e.clientX-r.left,y:e.clientY-r.top};
+      }
+      canvas.addEventListener('mousedown',e=>{painting=true;const p=pos(e);scratch(p.x,p.y)});
+      canvas.addEventListener('mousemove',e=>{if(!painting)return;const p=pos(e);scratch(p.x,p.y)});
+      canvas.addEventListener('mouseup',()=>painting=false);
+      canvas.addEventListener('touchstart',e=>{e.preventDefault();painting=true;const p=pos(e);scratch(p.x,p.y)},{passive:false});
+      canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!painting)return;const p=pos(e);scratch(p.x,p.y)},{passive:false});
+      canvas.addEventListener('touchend',()=>painting=false);
+      new ResizeObserver(()=>{if(!revealed)resize()}).observe(wrap);
+      setTimeout(resize,100);
+    }
+
+    /* TRANSITIONS */
+    function fadeTransition(cb){
+      const f=document.getElementById('fade');
+      f.style.opacity='1';f.style.pointerEvents='all';
+      setTimeout(()=>{cb();f.style.opacity='0';f.style.pointerEvents='none';},450);
+    }
+
+    function openVideo(){
+      const cover=document.getElementById('screen-cover');
+      const vid=document.getElementById('screen-video');
+      const video=document.getElementById('intro-video');
+      fadeTransition(()=>{
+        cover.style.display='none';
+        vid.style.display='block';
+        video.play().catch(()=>{});
+      });
+      video.addEventListener('ended',openInvitation,{once:true});
+    }
+
+    function openInvitation(){
+      const vid=document.getElementById('screen-video');
+      const main=document.getElementById('main-invitation');
+      fadeTransition(()=>{
+        vid.style.display='none';
+        main.style.display='block';
+        window.scrollTo(0,0);
+        initReveal();
+        initScratch('canvas1','hint1','scratch1');
+        initScratch('canvas2','hint2','scratch2');
+      });
+    }
+
+    /* SCROLL REVEAL */
+    function initReveal(){
+      const obs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+        });
+      },{threshold:.1});
+      document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    }
+
+    /* PRÉCHARGEMENT VIDÉO */
+    document.getElementById('intro-video').load();
+    document.getElementById('intro-video').addEventListener('error',openInvitation);
+  </script>
+</body>
+</html>

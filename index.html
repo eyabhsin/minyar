@@ -142,10 +142,10 @@
     #main-invitation { display: none; }
 
     .inv-section {
-      position: relative; min-height: 100vh;
+      position: relative;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      overflow: hidden; padding: 3rem 1.4rem;
+      overflow: hidden; padding: 2.4rem 1.4rem;
     }
 
     /* BG FLORAL */
@@ -229,9 +229,9 @@
     .inv-section.visible .sec-content { opacity: 1; transform: translateY(0) scale(1); }
 
     .section-transition {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
       z-index: 2; pointer-events: none;
-      background: linear-gradient(to bottom, transparent, rgba(255,248,238,0.55));
+      background: linear-gradient(to bottom, transparent, rgba(255,248,238,0.4));
     }
 
     /* ----- CONTENT ----- */
@@ -352,15 +352,7 @@
       white-space: nowrap;
     }
 
-    .dresscode-img {
-      width: 100%; max-width: 320px; border-radius: 6px;
-      border: 1.5px solid var(--rose-lt);
-      box-shadow: 0 8px 30px rgba(163,96,95,.18);
-      display: block; margin: 0 auto;
-      transition: transform .5s ease, box-shadow .5s ease;
-    }
-    .dresscode-img:hover { transform: scale(1.03) rotate(1deg); box-shadow: 0 12px 40px rgba(163,96,95,.28); }
-
+    
     /* CARTES DE DATES (visibles, sans effet à gratter) */
     .event-card {
       background: rgba(255,255,255,.55);
@@ -657,23 +649,19 @@
             </a>
           </div>
         </div>
-        <div class="divider light reveal d3"><span>✦</span></div>
       </div>
     </div>
-
-
 
     <!-- S9 : Clôture -->
     <div class="inv-section bg-deep" data-section="9">
       <div class="deep-glow"></div>
       <div class="sec-content">
         <div class="divider light reveal"><span>✦</span></div>
-       
         <span class="heart-beat reveal d2">♡</span>
         <div class="closing-arabic reveal d3">
-   سائلين الله تعالى أن يبارك لهما، ويجمع بينهما في خير، وتكتمل فرحتنا بحضوركم ودعواتكم الصادقة و لكم العاقبه في الأفراح و المسرات
+          سائلين الله تعالى أن يبارك لهما، ويجمع بينهما في خير، وتكتمل فرحتنا بحضوركم ودعواتكم الصادقة و لكم العاقبه في الأفراح و المسرات
         </div>
-       
+      </div>
     </div>
 
   </div>

@@ -341,6 +341,7 @@
       transition: transform .5s ease, box-shadow .5s ease;
     }
     .video-box:hover { transform: scale(1.01); box-shadow: 0 12px 50px rgba(163,96,95,.25); }
+    .video-box img,
     .video-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .video-tag {
       position: absolute; bottom: .8rem; left: 50%; transform: translateX(-50%);
@@ -360,47 +361,30 @@
     }
     .dresscode-img:hover { transform: scale(1.03) rotate(1deg); box-shadow: 0 12px 40px rgba(163,96,95,.28); }
 
-    /* SCRATCH */
-    .scratch-wrap {
-      position: relative; width: 100%; border-radius: 6px;
-      overflow: hidden; cursor: crosshair;
-      user-select: none; touch-action: none;
-    }
-    .scratch-revealed {
+    /* CARTES DE DATES (visibles, sans effet à gratter) */
+    .event-card {
       background: rgba(255,255,255,.55);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
       border: 1px solid rgba(201,139,139,.35);
       border-radius: 6px; padding: 1.8rem 1.4rem;
       text-align: center;
+      width: 100%;
+      transition: transform .4s ease, background .4s ease, border-color .4s ease;
     }
-    .scratch-revealed .ev-icon { font-size: 1.6rem; color: var(--rose-dk); animation: iconPulse 2s ease-in-out infinite; }
-    @keyframes iconPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
-    .scratch-revealed .ev-title {
+    .event-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.78);
+      border-color: rgba(201,139,139,.55);
+    }
+    .event-card .ev-icon { font-size: 1.6rem; color: var(--rose-dk); display: block; }
+    .event-card .ev-title {
       font-family: 'Amiri', serif; font-size: 1.5rem;
       color: var(--ink); font-weight: 700; display: block; margin: .3rem 0;
     }
-    .scratch-revealed .ev-detail {
+    .event-card .ev-detail {
       font-family: 'Cormorant Garamond', serif; font-style: italic;
       font-size: 1rem; color: var(--rose-dk); letter-spacing: .08em; opacity: 0.9;
     }
-    canvas.scratch-canvas {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      border-radius: 6px; touch-action: none;
-    }
-    .scratch-hint {
-      position: absolute; inset: 0; display: flex;
-      flex-direction: column; align-items: center; justify-content: center;
-      pointer-events: none; gap: .5rem; z-index: 2;
-      animation: hintPulse 3s ease-in-out infinite;
-    }
-    @keyframes hintPulse { 0%,100%{opacity:.78} 50%{opacity:1} }
-    .scratch-hint span {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
-      color: var(--cream); font-size: .95rem; letter-spacing: .15em;
-      text-shadow: 0 1px 6px rgba(122,74,72,.5);
-    }
-    .scratch-hint .eraser-emoji { font-size: 2rem; animation: emojiWiggle 2s ease-in-out infinite; }
-    @keyframes emojiWiggle { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
 
     /* PROGRAMME - DATES */
     .dates-container {
@@ -591,7 +575,7 @@
       </div>
     </div>
 
-    <!-- S3 : Carte d'invitation arabe (NOUVEAU) -->
+    <!-- S3 : Carte d'invitation arabe -->
     <div class="inv-section bg-starry-night" data-section="3">
       <div class="star-layer" id="star-layer-1"></div>
       <div class="nebula"></div>
@@ -613,7 +597,7 @@
       </div>
     </div>
 
-    <!-- S4 : Vidéo souvenir -->
+    <!-- S4 : Image souvenir -->
     <div class="inv-section bg-starry-night" data-section="4">
       <div class="star-layer" id="star-layer-2"></div>
       <div class="nebula"></div>
@@ -621,55 +605,35 @@
       <div class="sec-content">
         <div class="basmala reveal" style="font-size:1.3rem">Nos plus beaux moments</div>
         <div class="video-box reveal d2">
-          <video src="video2.mp4" autoplay playsinline muted loop></video>
+          <img src="image4.png" alt="Nos plus beaux moments" />
           <span class="video-tag">✦ &nbsp; Nos moments &nbsp; ✦</span>
         </div>
         <div class="divider light reveal d3"><span>✦</span></div>
       </div>
     </div>
 
-    <!-- S5 : Scratch (événements) -->
+    <!-- S5 : Dates (cartes visibles, lisibles) -->
     <div class="inv-section bg-starry-night" data-section="5">
       <div class="star-layer" id="star-layer-3"></div>
       <div class="nebula"></div>
       <div class="section-transition"></div>
       <div class="sec-content">
         <div class="basmala reveal" style="font-size:1.2rem">✦ &nbsp; برنامج الاحتفالات &nbsp; ✦</div>
-        <p class="reveal d1" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--rose-dk);font-size:.9rem;letter-spacing:.15em;opacity:0.88">
-          اكشف عن التفاصيل — Découvrez les dates
-        </p>
-        <div class="scratch-wrap reveal d2" id="scratch1" style="width:100%">
-          <div class="scratch-revealed">
-            <span class="ev-icon">🌙</span>
-            <span class="ev-title">العشاء</span>
-            <span class="ev-detail">الثلاثاء، 18 أوت 2026</span>
-            <span class="ev-detail" style="display:block;margin-top:.3rem">بمنزل العروسة الكائن بالميدة</span>
-          </div>
-          <canvas class="scratch-canvas" id="canvas1"></canvas>
-          <div class="scratch-hint" id="hint1">
-            <span class="eraser-emoji">🧹</span>
-            <span>إمسح هنا</span>
-          </div>
+        <div class="event-card reveal d2">
+          <span class="ev-icon">🌙</span>
+          <span class="ev-title">العشاء</span>
+          <span class="ev-detail">الثلاثاء، 18 أوت 2026</span>
+          <span class="ev-detail" style="display:block;margin-top:.3rem">بمنزل العروسة الكائن بالميدة</span>
         </div>
-        <div class="scratch-wrap reveal d3" id="scratch2" style="width:100%">
-          <div class="scratch-revealed">
-            <span class="ev-icon">✨</span>
-            <span class="ev-title">الوطية و عقد القران</span>
-            <span class="ev-detail">الخميس، 20 أوت 2026</span>
-            <span class="ev-detail" style="display:block;margin-top:.3rem">قاعة الأفراح بالميدة</span>
-          </div>
-          <canvas class="scratch-canvas" id="canvas2"></canvas>
-          <div class="scratch-hint" id="hint2">
-            <span class="eraser-emoji">🧹</span>
-            <span>إمسح هنا</span>
-          </div>
+        <div class="event-card reveal d3">
+          <span class="ev-icon">✨</span>
+          <span class="ev-title">الوطية و عقد القران</span>
+          <span class="ev-detail">الخميس، 20 أوت 2026</span>
+          <span class="ev-detail" style="display:block;margin-top:.3rem">قاعة الأفراح بالميدة</span>
         </div>
         <div class="divider light reveal d4"><span>✦</span></div>
       </div>
     </div>
-
-    <!-- S6 : Dates du programme (remplace l'ancien programme) -->
-  
 
     <!-- S7 : Localisation -->
     <div class="inv-section bg-floral" data-section="7">
@@ -753,67 +717,6 @@
       document.querySelectorAll('.inv-section').forEach(s=>obs.observe(s));
     })();
 
-    /* SCRATCH */
-    function initScratch(canvasId,hintId,wrapId){
-      const canvas=document.getElementById(canvasId);
-      const hint=document.getElementById(hintId);
-      const wrap=document.getElementById(wrapId);
-      if(!canvas)return;
-      const ctx=canvas.getContext('2d');
-      let W,H,painting=false,revealed=false;
-      function resize(){
-        const r=wrap.getBoundingClientRect();
-        W=canvas.width=r.width;
-        H=canvas.height=r.height||150;
-        draw();
-      }
-      function draw(){
-        const grd=ctx.createLinearGradient(0,0,W,H);
-        grd.addColorStop(0,'#A3605F');
-        grd.addColorStop(.35,'#C98B8B');
-        grd.addColorStop(.65,'#E3BEBE');
-        grd.addColorStop(1,'#B9807F');
-        ctx.globalCompositeOperation='source-over';
-        ctx.fillStyle=grd;
-        ctx.fillRect(0,0,W,H);
-        ctx.strokeStyle='rgba(255,255,255,.15)';
-        ctx.lineWidth=1;
-        for(let i=0;i<W;i+=10){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
-        for(let i=0;i<H;i+=10){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
-      }
-      function scratch(x,y){
-        ctx.globalCompositeOperation='destination-out';
-        ctx.beginPath();ctx.arc(x,y,22,0,Math.PI*2);ctx.fill();
-        checkReveal();
-      }
-      function checkReveal(){
-        if(revealed)return;
-        const d=ctx.getImageData(0,0,W,H).data;
-        let trans=0;
-        for(let i=3;i<d.length;i+=4)if(d[i]<128)trans++;
-        if(trans/(d.length/4)*100>55){
-          revealed=true;
-          canvas.style.transition='opacity .6s ease';
-          canvas.style.opacity='0';
-          if(hint)hint.style.display='none';
-          setTimeout(()=>{canvas.style.display='none'},650);
-        }
-      }
-      function pos(e){
-        const r=canvas.getBoundingClientRect();
-        if(e.touches)return{x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};
-        return{x:e.clientX-r.left,y:e.clientY-r.top};
-      }
-      canvas.addEventListener('mousedown',e=>{painting=true;const p=pos(e);scratch(p.x,p.y)});
-      canvas.addEventListener('mousemove',e=>{if(!painting)return;const p=pos(e);scratch(p.x,p.y)});
-      canvas.addEventListener('mouseup',()=>painting=false);
-      canvas.addEventListener('touchstart',e=>{e.preventDefault();painting=true;const p=pos(e);scratch(p.x,p.y)},{passive:false});
-      canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!painting)return;const p=pos(e);scratch(p.x,p.y)},{passive:false});
-      canvas.addEventListener('touchend',()=>painting=false);
-      new ResizeObserver(()=>{if(!revealed)resize()}).observe(wrap);
-      setTimeout(resize,100);
-    }
-
     /* TRANSITIONS */
     function fadeTransition(cb){
       const f=document.getElementById('fade');
@@ -841,8 +744,6 @@
         main.style.display='block';
         window.scrollTo(0,0);
         initReveal();
-        initScratch('canvas1','hint1','scratch1');
-        initScratch('canvas2','hint2','scratch2');
       });
     }
 
